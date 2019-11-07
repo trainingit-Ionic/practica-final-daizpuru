@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Carrito de la compra
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="carroCompra != null">
+    <ion-list-header>
+      Productos en su carrito de la compra
+    </ion-list-header>
+    <ion-item *ngFor="let item of carroCompra">
+      <ion-avatar slot="start" *ngIf="item.id <= 9">
+        <img src="../../assets/icon/{{ item.id }}.PNG" />
+      </ion-avatar>
+      <ion-avatar slot="start" *ngIf="item.id > 9">
+        <img src="../../assets/icon/new_book.PNG" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ item.nombre }}</h2>
+        <h3 style="color: green;">{{ item.precio }}€</h3>
+        <p>{{ item.descripcion }}</p>
+      </ion-label>
+      <ion-button slot="end" (click)="deleteItem(item.id)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-card *ngIf="carroCompra != null">
+      <ion-card-header>
+        <ion-card-title>Resumen de su pedido</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><b>Items en el carrito</b>:</p><h2 style="color: green;">{{ numItems }}</h2>
+        <p><b>Total compra</b></p><h2 style="color: green;">{{ totalCarro }} €</h2>
+      </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="carroCompra == null">
+    <ion-card-header>
+      <ion-card-subtitle>Aplicación de lista de la compra</ion-card-subtitle>
+      <ion-card-title>El carrito de la compra está vacío</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Vaya al
+        <a routerLink="/list" routerLinkActive="active">listado de productos</a>
+        para seguir comprando
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <section class="full-width">
+    <ion-button
+      expand="block"
+      *ngIf="carroCompra != null"
+      (click)="limpiarCarrito()"
+    >
+      Limpiar carrito
+      <ion-icon slot="end" name="trash"></ion-icon>
+    </ion-button>
+  </section>
+</ion-content>

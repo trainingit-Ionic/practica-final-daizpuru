@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Lista de productos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Registro de nuevos productos -->
+  <form #form="ngForm" (ngSubmit)="registrarItem(form)">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Datos del producto</ion-card-subtitle>
+        </ion-card-header>
+  
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col text-center>
+                <ion-item>
+                  <ion-label position="floating">Nombre <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input name="nombreItem" autocomplete="on" ngModel required></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center>
+                <ion-item>
+                    <ion-label position="floating">Descripción <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="descripcionItem" autocomplete="on" ngModel required></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col text-center>
+                  <ion-item>
+                      <ion-label position="floating">Precio <ion-text color="danger">*</ion-text></ion-label>
+                      <ion-input name="precioItem" autocomplete="on" ngModel required></ion-input>
+                  </ion-item>
+                </ion-col>
+            </ion-row>            
+            <ion-row>
+              <ion-col text-center>
+                <ion-button type="submit">Añadir</ion-button>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </form>
+  
+  <ion-list>
+    <ion-list-header>
+      Productos disponibles
+    </ion-list-header>    
+    <ion-item *ngFor="let item of itemsDisponibles">
+      <ion-avatar slot="start" *ngIf="(item.id <= 9)">
+        <img src="../../assets/icon/{{item.id}}.PNG">
+      </ion-avatar>
+      <ion-avatar slot="start" *ngIf="(item.id > 9)">
+          <img src="../../assets/icon/new_book.PNG">
+      </ion-avatar>      
+      <ion-label>
+        <h2>{{item.nombre}}</h2>
+        <ion-badge *ngIf="checkItemAdded(item.id);" color="success">Añadido al carrito</ion-badge>
+        <h3 style="color: green;">{{item.precio}}€</h3>
+        <p>{{item.descripcion}}</p>
+      </ion-label>      
+      <ion-button *ngIf="!checkItemAdded(item.id);"  slot="end" (click)="addItem(item.id);">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="checkItemAdded(item.id);"  slot="end" (click)="deleteItem(item.id);">
+          <ion-icon name="trash"></ion-icon>      
+      </ion-button>      
+    </ion-item>
+  </ion-list>
+</ion-content>
